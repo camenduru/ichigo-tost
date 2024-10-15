@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export NVM_DIR="/home/camenduru/.nvm"
+export NVM_DIR="/root/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 nvm use $NODE_VERSION

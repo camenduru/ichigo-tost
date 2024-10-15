@@ -8,16 +8,7 @@ ENV TTS_BASE_URL=http://localhost:22311/v1/
 COPY start.sh /content/start.sh
 RUN chmod +x /content/start.sh
 
-RUN adduser --disabled-password --gecos '' camenduru && \
-    adduser camenduru sudo && \
-    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
-    chown -R camenduru:camenduru /content && \
-    chmod -R 777 /content && \
-    chown -R camenduru:camenduru /home && \
-    chmod -R 777 /home && \
-    apt update -y && add-apt-repository -y ppa:git-core/ppa && apt update -y && apt install -y aria2 git git-lfs unzip ffmpeg
-
-USER camenduru
+RUN apt update -y && add-apt-repository -y ppa:git-core/ppa && apt update -y && apt install -y aria2 git git-lfs unzip ffmpeg
 
 RUN pip install -q opencv-python imageio imageio-ffmpeg ffmpeg-python av runpod \
     torch==2.3.1+cu121 torchvision==0.18.1+cu121 torchaudio==2.3.1+cu121 torchtext==0.18.0 torchdata==0.8.0 --extra-index-url https://download.pytorch.org/whl/cu121 \
@@ -50,10 +41,10 @@ RUN pip install -q opencv-python imageio imageio-ffmpeg ffmpeg-python av runpod 
     aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://raw.githubusercontent.com/camenduru/ichigo-tost/refs/heads/main/whisperAPI.py -d /content -o whisperAPI.py && \
     aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/jan-hq/WhisperVQ/resolve/main/whisper-vq-stoks-v3-7lang-fixed.model -d /content -o whisper-vq-stoks-v3-7lang-fixed.model && \
     aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/jan-hq/WhisperVQ/resolve/main/whisper-vq-stoks-medium-en%2Bpl-fixed.model -d /content -o whisper-vq-stoks-medium-en+pl-fixed.model && \
-    aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/4bit/whisper/resolve/main/medium.pt -d /home/camenduru/.cache/whisper -o medium.pt
+    aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/4bit/whisper/resolve/main/medium.pt -d /root/.cache/whisper -o medium.pt
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && \
-    export NVM_DIR="/home/camenduru/.nvm" && \
+    export NVM_DIR="/root/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
     nvm install 18.20.3 && \
     nvm use 18.20.3 && \
