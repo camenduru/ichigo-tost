@@ -5,9 +5,6 @@ ENV OPENAI_BASE_URL=http://localhost:5000/v1/
 ENV TOKENIZE_BASE_URL=http://localhost:3348
 ENV TTS_BASE_URL=http://localhost:22311/v1/
 
-COPY start.sh /content/start.sh
-RUN chmod +x /content/start.sh
-
 RUN apt update -y && add-apt-repository -y ppa:git-core/ppa && apt update -y && apt install -y aria2 git git-lfs unzip ffmpeg
 
 RUN pip install -q opencv-python imageio imageio-ffmpeg ffmpeg-python av runpod \
@@ -51,4 +48,6 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | b
     npm install -g npm && \
     cd /content/ichigo-demo && npm install && npm run build
 
+COPY start.sh /content/start.sh
+RUN chmod +x /content/start.sh
 ENTRYPOINT ["/content/start.sh"]
