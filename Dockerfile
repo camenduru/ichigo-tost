@@ -45,9 +45,12 @@ RUN pip install -q opencv-python imageio imageio-ffmpeg ffmpeg-python av runpod 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && \
     export NVM_DIR="$HOME/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
-    nvm install 18.20.3
+    nvm install 18.20.3 && \
+    . "$NVM_DIR/nvm.sh" && npm install -g npm
 
-RUN cd /content/ichigo-demo && npm install && npm run build
+RUN export NVM_DIR="$HOME/.nvm" && \
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
+    cd /content/ichigo-demo && npm install && npm run build
 
 WORKDIR /content
 
