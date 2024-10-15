@@ -10,7 +10,7 @@ from whisperspeech.vq_stoks import RQBottleneckTransformer
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 app = FastAPI()
 device="cuda"
-vq_model = RQBottleneckTransformer.load_model("whisper-vq-stoks-v3-7lang-fixed.model").to(device)
+vq_model = RQBottleneckTransformer.load_model("whisper-vq-stoks-medium-en+pl-fixed.model").to(device)
 vq_model.ensure_whisper(device)
 @app.post("/tokenize")
 async def tokenize_audio(file: UploadFile = File(...)):
@@ -22,7 +22,7 @@ async def tokenize_audio(file: UploadFile = File(...)):
         codes = vq_model.encode_audio(wav.to('cuda'))
         codes = codes[0].cpu().tolist()
     result = ''.join(f'<|sound_{num:04d}|>' for num in codes)
-    return JSONResponse(content={"model_name": "whisper-vq-stoks-v3-7lang-fixed.model"  , "tokens": f'<|sound_start|>{result}<|sound_end|>'})
+    return JSONResponse(content={"model_name": "whisper-vq-stoks-medium-en+pl-fixed.model"  , "tokens": f'<|sound_start|>{result}<|sound_end|>'})
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=3348)
