@@ -9,7 +9,7 @@ https://tost.ai
 https://github.com/theroyallab/tabbyAPI <br />
 https://github.com/fishaudio/fish-speech <br />
 https://github.com/openai/whisper <br />
-https://github.com/camenduru/ichigo-demo <br />
+https://github.com/homebrewltd/ichigo-demo <br />
 
 ### 🖼 Output
 
